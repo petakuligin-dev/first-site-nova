@@ -1,6 +1,7 @@
+import { NavLink } from 'react-router-dom'
 import { siteContent } from '../data/content'
-import { scrollToSection } from '../utils/scroll'
 import { Icon } from './Icon'
+import { Logo } from './Logo'
 
 export function Footer() {
   return (
@@ -9,34 +10,26 @@ export function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <div className="footer__logo">
-              <span className="logo__icon">Н</span>
-              {siteContent.company.name}
+              <Logo />
             </div>
             <p className="footer__desc">{siteContent.company.tagline}. {siteContent.hero.subtitle}</p>
           </div>
 
           <div>
-            <h3 className="footer__heading">Навигация</h3>
+            <h3 className="footer__heading">{siteContent.footer.headings.nav}</h3>
             <ul className="footer__links">
               {siteContent.footer.links.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="footer__link"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      scrollToSection(link.href)
-                    }}
-                  >
+                  <NavLink to={link.href} className="footer__link">
                     {link.label}
-                  </a>
+                  </NavLink>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="footer__heading">Соцсети</h3>
+            <h3 className="footer__heading">{siteContent.footer.headings.social}</h3>
             <div className="footer__social">
               {siteContent.footer.social.map((social) => (
                 <a

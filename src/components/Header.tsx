@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { siteContent } from '../data/content'
 import { scrollToSection } from '../utils/scroll'
+import { Logo } from './Logo'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isHome = location.pathname === '/'
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20)
@@ -19,51 +25,49 @@ export function Header() {
     }
   }, [isMenuOpen])
 
-  const handleNavClick = (href: string) => {
-    scrollToSection(href)
+  const goContact = () => {
     setIsMenuOpen(false)
+    if (isHome) {
+      scrollToSection('#contact')
+    } else {
+      navigate('/', { state: { scrollTo: 'contact' } })
+    }
+  }
+
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `nav__link ${isActive ? 'nav__link--active' : ''}`
+
+  const mobileLinkClass = (href: string) => {
+    const isActive = location.pathname === href
+    return `mobile-menu__link ${isActive ? 'mobile-menu__link--active' : ''}`
   }
 
   return (
     <>
-      <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+      <header className={`header ${isScrolled || !isHome ? 'header--scrolled' : ''}`}>
         <div className="container header__inner">
-          <a
-            href="#"
-            className="logo"
-            onClick={(e) => {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-            }}
-            aria-label={`${siteContent.company.name} — на главную`}
-          >
-            <span className="logo__icon">Н</span>
-            {siteContent.company.name}
-          </a>
+          <NavLink to="/" className="logo-link" aria-label={`${siteContent.company.name} — на главную`}>
+            <Logo />
+          </NavLink>
 
           <nav className="nav" aria-label="Основная навигация">
-            {siteContent.nav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="nav__link"
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleNavClick(item.href)
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
+            {siteContent.nav.map((item) =>
+              item.type === 'contact' ? (
+                <button key={item.href} type="button" className="nav__link" onClick={goContact}>
+                  {item.label}
+                </button>
+              ) : (
+                <NavLink key={item.href} to={item.href} className={navLinkClass} end={item.href === '/'}>
+                  {item.label}
+                </NavLink>
+              ),
+            )}
           </nav>
 
           <div className="header__actions">
-            <button
-              type="button"
-              className="btn btn--primary"
-              onClick={() => handleNavClick('#contact')}
-            >
-              Связаться
+            <ThemeToggle />
+            <button type="button" className="btn btn--primary" onClick={goContact}>
+              {siteContent.header.cta}
             </button>
           </div>
 
@@ -85,25 +89,33 @@ export function Header() {
         className={`mobile-menu ${isMenuOpen ? 'mobile-menu--open' : ''}`}
         aria-label="Мобильная навигация"
       >
-        {siteContent.nav.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className="mobile-menu__link"
-            onClick={(e) => {
-              e.preventDefault()
-              handleNavClick(item.href)
-            }}
-          >
-            {item.label}
-          </a>
-        ))}
-        <button
-          type="button"
-          className="btn btn--primary btn--full mobile-menu__cta"
-          onClick={() => handleNavClick('#contact')}
-        >
-          Связаться
+        {siteContent.nav.map((item) =>
+          item.type === 'contact' ? (
+            <button
+              key={item.href}
+              type="button"
+              className="mobile-menu__link"
+              onClick={goContact}
+            >
+              {item.label}
+            </button>
+          ) : (
+            <NavLink
+              key={item.href}
+              to={item.href}
+              className={mobileLinkClass(item.href)}
+              onClick={() => setIsMenuOpen(false)}
+              end={item.href === '/'}
+            >
+              {item.label}
+            </NavLink>
+          ),
+        )}
+        <div className="mobile-menu__theme">
+          <ThemeToggle />
+        </div>
+        <button type="button" className="btn btn--primary btn--full mobile-menu__cta" onClick={goContact}>
+          {siteContent.header.cta}
         </button>
       </nav>
     </>

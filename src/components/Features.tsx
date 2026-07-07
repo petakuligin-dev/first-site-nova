@@ -5,7 +5,7 @@ export function Features() {
   const { ref, isVisible } = useFadeIn()
 
   return (
-    <section id="features" className="section section--muted" aria-labelledby="features-title">
+    <section id="features" className="section section--surface" aria-labelledby="features-title">
       <div className="container">
         <div className="section-header">
           <span className="section-label">{siteContent.features.title}</span>

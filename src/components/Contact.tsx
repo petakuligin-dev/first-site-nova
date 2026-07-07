@@ -72,7 +72,7 @@ export function Contact() {
   const { contact } = siteContent
 
   return (
-    <section id="contact" className="section" aria-labelledby="contact-title">
+    <section id="contact" className="section section--light" aria-labelledby="contact-title">
       <div className="container">
         <div className="section-header">
           <span className="section-label">{contact.title}</span>

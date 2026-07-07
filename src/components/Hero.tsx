@@ -34,9 +34,9 @@ export function Hero() {
           </div>
 
           <h1 className="hero__title">
-            Создаём{' '}
-            <span className="hero__title-accent">технологии</span>, которые
-            двигают ваш бизнес вперёд
+            {siteContent.hero.title}{' '}
+            <span className="hero__title-accent">{siteContent.hero.titleAccent}</span>
+            {siteContent.hero.titleEnd}
           </h1>
 
           <p className="hero__subtitle">{siteContent.hero.subtitle}</p>
@@ -62,7 +62,7 @@ export function Hero() {
         <div className={`hero__media fade-in fade-in--delay-2 ${isVisible ? 'fade-in--visible' : ''}`}>
           <ResponsiveImage
             src={siteContent.images.hero}
-            alt="Команда НоваТех за работой в современном офисе"
+            alt={siteContent.images.alts.hero}
             className="hero__image"
             loading="eager"
             width={800}

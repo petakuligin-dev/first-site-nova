@@ -22,15 +22,15 @@ export function About() {
           <div className="about__visual">
             <ResponsiveImage
               src={siteContent.images.about}
-              alt="Команда НоваТех на совещании"
+              alt={siteContent.images.alts.about}
               className="about__image"
               loading="lazy"
               width={800}
               height={600}
             />
             <div className="about__visual-badge">
-              <span className="about__visual-badge-value">10+</span>
-              <span className="about__visual-badge-label">лет опыта</span>
+              <span className="about__visual-badge-value">{siteContent.about.badgeValue}</span>
+              <span className="about__visual-badge-label">{siteContent.about.badgeLabel}</span>
             </div>
           </div>
 

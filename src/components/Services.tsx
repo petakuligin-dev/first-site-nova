@@ -7,7 +7,7 @@ export function Services() {
   const { ref, isVisible } = useFadeIn()
 
   return (
-    <section id="services" className="section" aria-labelledby="services-title">
+    <section id="services" className="section section--muted" aria-labelledby="services-title">
       <div className="container">
         <div className="section-header">
           <span className="section-label">{siteContent.services.title}</span>
@@ -20,7 +20,7 @@ export function Services() {
           <div className="services__banner">
             <ResponsiveImage
               src={siteContent.images.servicesBanner}
-              alt="Технологии и цифровые решения НоваТех"
+              alt={siteContent.images.alts.servicesBanner}
               className="services__banner-image"
               loading="lazy"
               width={1200}
@@ -28,7 +28,7 @@ export function Services() {
             />
             <div className="services__banner-overlay">
               <p className="services__banner-text">
-                От стратегии до запуска — полный цикл цифровой разработки
+                {siteContent.services.bannerText}
               </p>
             </div>
           </div>
