@@ -1,0 +1,37 @@
+{
+  "name": "first",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not op_mini all"
+  ],
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host",
+    "start": "vite --host",
+    "serve": "npm run build && serve dist -l 4173",
+    "lint": "oxlint"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "autoprefixer": "^10.5.2",
+    "oxlint": "^1.71.0",
+    "postcss": "^8.5.16",
+    "serve": "^14.2.4",
+    "typescript": "~6.0.2",
+    "vite": "^8.1.1"
+  }
+}
