@@ -1,10 +1,14 @@
 import { siteContent } from '../data/content'
 import { scrollToSection } from '../utils/scroll'
-import { useFadeIn } from '../hooks/useFadeIn'
 import { ResponsiveImage } from './ResponsiveImage'
+import { Aurora } from './effects/Aurora'
+import { SplitText } from './effects/SplitText'
+import { BlurText } from './effects/BlurText'
+import { MagneticButton } from './effects/MagneticButton'
+import { TiltCard } from './effects/TiltCard'
 
 export function Hero() {
-  const { ref, isVisible } = useFadeIn()
+  const fullTitle = `${siteContent.hero.title} ${siteContent.hero.titleAccent}${siteContent.hero.titleEnd}`
 
   return (
     <section className="hero" aria-label="Главный экран">
@@ -18,48 +22,37 @@ export function Hero() {
           height={1080}
         />
         <div className="hero__overlay" />
-        <div className="hero__gradient hero__gradient--1" />
-        <div className="hero__gradient hero__gradient--2" />
-        <div className="hero__grid" />
+        <Aurora />
       </div>
 
       <div className="container hero__layout">
-        <div
-          ref={ref}
-          className={`hero__content fade-in ${isVisible ? 'fade-in--visible' : ''}`}
-        >
+        <div className="hero__content">
           <div className="hero__badge">
             <span className="hero__badge-dot" />
             {siteContent.company.tagline}
           </div>
 
-          <h1 className="hero__title">
-            {siteContent.hero.title}{' '}
-            <span className="hero__title-accent">{siteContent.hero.titleAccent}</span>
-            {siteContent.hero.titleEnd}
+          <h1 className="hero__title" aria-label={fullTitle}>
+            <SplitText text={`${siteContent.hero.title} `} className="hero__title-plain" tag="span" />
+            <span className="hero__title-accent">
+              <SplitText text={siteContent.hero.titleAccent} delay={36} tag="span" />
+            </span>
+            <SplitText text={siteContent.hero.titleEnd} className="hero__title-plain" delay={42} tag="span" />
           </h1>
 
-          <p className="hero__subtitle">{siteContent.hero.subtitle}</p>
+          <BlurText text={siteContent.hero.subtitle} className="hero__subtitle" tag="p" delay={35} />
 
           <div className="hero__actions">
-            <button
-              type="button"
-              className="btn btn--primary"
-              onClick={() => scrollToSection('#services')}
-            >
+            <MagneticButton className="btn btn--primary" onClick={() => scrollToSection('#services')}>
               {siteContent.hero.primaryCta}
-            </button>
-            <button
-              type="button"
-              className="btn btn--secondary"
-              onClick={() => scrollToSection('#contact')}
-            >
+            </MagneticButton>
+            <MagneticButton className="btn btn--secondary" onClick={() => scrollToSection('#contact')}>
               {siteContent.hero.secondaryCta}
-            </button>
+            </MagneticButton>
           </div>
         </div>
 
-        <div className={`hero__media fade-in fade-in--delay-2 ${isVisible ? 'fade-in--visible' : ''}`}>
+        <TiltCard className="hero__media">
           <ResponsiveImage
             src={siteContent.images.hero}
             alt={siteContent.images.alts.hero}
@@ -68,8 +61,7 @@ export function Hero() {
             width={800}
             height={500}
           />
-          <div className="hero__image-glow" aria-hidden="true" />
-        </div>
+        </TiltCard>
       </div>
     </section>
   )

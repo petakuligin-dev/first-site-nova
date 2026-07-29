@@ -6,9 +6,15 @@ import { TeamPage } from './pages/TeamPage'
 import { ReviewsPage } from './pages/ReviewsPage'
 import { FaqPage } from './pages/FaqPage'
 
+const rawBase = import.meta.env.BASE_URL
+const basename =
+  !rawBase || rawBase === './' || rawBase === '/'
+    ? undefined
+    : rawBase.replace(/\/$/, '')
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />

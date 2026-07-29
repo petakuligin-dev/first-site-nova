@@ -1,29 +1,22 @@
 import { siteContent } from '../data/content'
-import { useFadeIn } from '../hooks/useFadeIn'
 import { ResponsiveImage } from './ResponsiveImage'
+import { TiltCard } from './effects/TiltCard'
+import { SplitText } from './effects/SplitText'
 
 export function Portfolio() {
-  const { ref, isVisible } = useFadeIn()
-
   return (
     <section id="portfolio" className="section section--light" aria-labelledby="portfolio-title">
       <div className="container">
         <div className="section-header">
           <span className="section-label">{siteContent.portfolio.title}</span>
           <h2 id="portfolio-title" className="section-title">
-            {siteContent.portfolio.subtitle}
+            <SplitText text={siteContent.portfolio.subtitle} tag="span" />
           </h2>
         </div>
 
-        <div
-          ref={ref}
-          className={`portfolio__grid fade-in ${isVisible ? 'fade-in--visible' : ''}`}
-        >
+        <div className="portfolio__grid">
           {siteContent.portfolio.items.map((item, index) => (
-            <article
-              key={item.title}
-              className={`portfolio-card fade-in fade-in--delay-${Math.min(index + 1, 4)} ${isVisible ? 'fade-in--visible' : ''}`}
-            >
+            <TiltCard key={item.title} className="portfolio-card">
               <div className="portfolio-card__image-wrap">
                 <ResponsiveImage
                   src={item.image}
@@ -37,7 +30,7 @@ export function Portfolio() {
                 <h3 className="portfolio-card__title">{item.title}</h3>
                 <p className="portfolio-card__description">{item.description}</p>
               </div>
-            </article>
+            </TiltCard>
           ))}
         </div>
       </div>

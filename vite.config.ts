@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Для GitHub Pages задаётся в Actions: VITE_BASE_PATH=/first-site-nova/
+const base = process.env.VITE_BASE_PATH || './'
+
 export default defineConfig({
-  // Относительные пути — сайт открывается с любого адреса и из папки dist
-  base: './',
+  base,
   plugins: [react()],
   server: {
     host: true,
